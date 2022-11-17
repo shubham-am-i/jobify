@@ -1,10 +1,16 @@
-import logo from '../assets/images/logo.svg'
+// external imports
+import { Link } from 'react-router-dom'
+
+// Local imports
 import main from '../assets/images/main.svg'
-const landing = () => {
+import Wrapper from '../assets/wrappers/LandingPage'
+import { Logo } from '../components'
+
+const Landing = () => {
   return (
-    <main>
+    <Wrapper>
       <nav>
-        <img src={logo} alt='jobify' className='logo' />
+        <Logo />
       </nav>
       <div className='container page'>
         <div className='info'>
@@ -15,12 +21,14 @@ const landing = () => {
             This is the react jobify project info which I have to change later
             on.
           </p>
-          <button className='btn btn-hero'>Login/Register</button>
+          <Link to='/register' className='btn btn-hero'>
+            Login/Register
+          </Link>
         </div>
         <img src={main} alt='job hunt' className='img main-img' />
       </div>
-    </main>
+    </Wrapper>
   )
 }
 
-export default landing
+export default Landing

@@ -1,19 +1,16 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Landing from './pages/Landing'
-import styled from 'styled-components'
-
-const Button = styled.button`
-  background: red;
-  color: white;
-  font-size: 1rem;
-`
 
 function App() {
   return (
-    <div>
-      <Button>Click Me</Button>
-      <h1>Jobify</h1>
-      <Landing />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<div>Dashboard</div>} />
+        <Route path='/landing' element={<Landing />} />
+        <Route path='/register' element={<div>Register</div>} />
+        <Route path='*' element={<h1>Error</h1>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
