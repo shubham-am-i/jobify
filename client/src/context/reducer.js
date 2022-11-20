@@ -44,6 +44,33 @@ const reducer = (state, { type, payload }) => {
         alertText: msg,
       }
     }
+    case 'LOGIN_USER_BEGIN': {
+      return { ...state, isLoading: true }
+    }
+    case 'LOGIN_USER_SUCCESS': {
+      const { token, user, location } = payload
+      return {
+        ...state,
+        isLoading: false,
+        token,
+        user,
+        userLocation: location,
+        jobLocation: location,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'Login Successful! Redirecting...',
+      }
+    }
+    case 'LOGIN_USER_ERROR': {
+      const { msg } = payload
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: msg,
+      }
+    }
 
     default:
       throw new Error(`no such action : ${type}`)

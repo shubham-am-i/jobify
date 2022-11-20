@@ -5,6 +5,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import 'express-async-errors'
+import morgan from 'morgan'
 
 // local imports
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
@@ -18,7 +19,9 @@ const app = express()
 
 // Middlewares
 app.use(express.json())
-app.use(logger)
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'))
+}
 
 // Mount Routers
 app.use('/api/v1/auth', authRouter)

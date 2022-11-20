@@ -67,8 +67,31 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const loginUser = async (currentUser) => {
+    try {
+      dispatch({ type: 'LOGIN_USER_BEGIN' })
+      const { data } = await axios.post('/api/v1/auth/login', currentUser)
+      const { user, token, location } = data
+      dispatch({
+        type: 'LOGIN_USER_SUCCESS',
+        payload: { user, token, location },
+      })
+      addUserToLocalStorage({ user, token, location })
+    } catch (error) {
+      dispatch({
+        type: 'LOGIN_USER_ERROR',
+        payload: {
+          msg: error.response.data.msg,
+        },
+      })
+    }
+    clearAlert()
+  }
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayAlert, registerUser, loginUser }}
+    >
       {children}
     </AppContext.Provider>
   )
