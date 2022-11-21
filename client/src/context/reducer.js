@@ -72,6 +72,10 @@ const reducer = (state, { type, payload }) => {
       }
     }
 
+    case 'TOGGLE_SIDEBAR': {
+      return { ...state, showSidebar: !state.showSidebar }
+    }
+
     default:
       throw new Error(`no such action : ${type}`)
   }
