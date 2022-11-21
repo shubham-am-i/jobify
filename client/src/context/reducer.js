@@ -1,3 +1,5 @@
+import { initialState } from './appContext'
+
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case 'DISPLAY_ALERT':
@@ -76,6 +78,15 @@ const reducer = (state, { type, payload }) => {
       return { ...state, showSidebar: !state.showSidebar }
     }
 
+    case 'LOGOUT_USER': {
+      return {
+        ...initialState,
+        user: null,
+        token: null,
+        jobLocation: '',
+        userLocation: '',
+      }
+    }
     default:
       throw new Error(`no such action : ${type}`)
   }

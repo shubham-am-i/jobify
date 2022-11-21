@@ -93,9 +93,20 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'TOGGLE_SIDEBAR' })
   }
 
+  const logoutUser = () => {
+    dispatch({ type: 'LOGOUT_USER' })
+    removeUserFromLocalStorage()
+  }
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, registerUser, loginUser, toggleSidebar }}
+      value={{
+        ...state,
+        displayAlert,
+        registerUser,
+        loginUser,
+        toggleSidebar,
+        logoutUser,
+      }}
     >
       {children}
     </AppContext.Provider>
