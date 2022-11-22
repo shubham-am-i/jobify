@@ -1,7 +1,5 @@
-// import Model
-import User from '../models/userModel.js'
-
 import ErrorResponse from '../utils/errorResponse.js'
+import User from '../models/userModel.js' // import Model
 
 // @desc    Register a new user
 // @route   POST /api/v1/auth/register
@@ -56,5 +54,17 @@ export const login = async (req, res) => {
 // @route   POST /api/v1/auth/updateUser
 // @access  Private
 export const updateUser = async (req, res) => {
-  res.send('UPDATE user')
+  const { email, name, lastName, location } = req.body
+  if (!name || !email || !lastName || !location) {
+    throw new ErrorResponse('Please provide all values', 400)
+  }
+  const user = await User.findOne({ _id: req.user._id })
+  user.email = email
+  user.name = name
+  user.lastName = lastName
+  user.location = location
+
+  await user.save()
+  const token = user.createJWT() //re-generate token
+  res.status(200).json({ user, token, location: user.location })
 }

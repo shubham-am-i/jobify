@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide password'],
     minlength: 6,
+    select: false,
   },
   lastName: {
     type: String,
@@ -41,12 +42,13 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.pre('save', async function () {
+  if (!this.isModified('password')) return // will avoid double hashing the password
   this.password = await bcrypt.hash(this.password, 10)
 })
 
 UserSchema.methods.createJWT = function () {
   // return token
-  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   })
 }

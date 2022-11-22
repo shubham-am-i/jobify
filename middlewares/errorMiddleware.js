@@ -32,6 +32,12 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400)
   }
 
+  // JWT tamper token error
+  if (err.name === 'JsonWebTokenError') {
+    const message = `invalid signature: looks like JWT is tampered.`
+    error = new ErrorResponse(message, 401)
+  }
+
   res.status(error.statusCode || 500).json({
     success: false,
     msg: error.message || 'Server Error',
