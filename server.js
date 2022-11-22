@@ -10,7 +10,6 @@ import morgan from 'morgan'
 // local imports
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 import connectDB from './config/db.js'
-import logger from './middlewares/loggerMiddleware.js'
 // import routers
 import authRouter from './routes/authRoutes.js'
 import jobsRouter from './routes/jobsRoutes.js'

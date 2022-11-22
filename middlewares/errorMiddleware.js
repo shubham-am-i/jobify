@@ -7,6 +7,7 @@ const notFound = (req, res, next) => {
 }
 
 const errorHandler = (err, req, res, next) => {
+  let message
   let error = { ...err }
   error.message = err.message
 
@@ -15,26 +16,26 @@ const errorHandler = (err, req, res, next) => {
 
   // Mongoose bad ObjectId
   if (err.name === 'CastError') {
-    const message = `Resource not found`
+    message = `Resource not found`
     // Creating object from ErrorResponse class, can set custom status code instead of just 500.
     error = new ErrorResponse(message, 404) // not found
   }
 
   // Mongoose duplicate key
   if (err.code === 11000) {
-    const message = `${Object.keys(err.keyValue)} field has to be unique.`
+    message = `${Object.keys(err.keyValue)} field has to be unique.`
     error = new ErrorResponse(message, 400) // bad request
   }
 
   // Mongoose validation error
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map((val) => val.message)
+    message = Object.values(err.errors).map((val) => val.message)
     error = new ErrorResponse(message, 400)
   }
 
   // JWT tamper token error
   if (err.name === 'JsonWebTokenError') {
-    const message = `invalid signature: looks like JWT is tampered.`
+    message = `invalid signature: looks like JWT is tampered.`
     error = new ErrorResponse(message, 401)
   }
 

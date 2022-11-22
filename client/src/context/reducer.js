@@ -87,6 +87,34 @@ const reducer = (state, { type, payload }) => {
         userLocation: '',
       }
     }
+
+    case 'UPDATE_USER_BEGIN': {
+      return { ...state, isLoading: true }
+    }
+    case 'UPDATE_USER_SUCCESS': {
+      const { token, user, location } = payload
+      return {
+        ...state,
+        isLoading: false,
+        token,
+        user,
+        userLocation: location,
+        jobLocation: location,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'User Profile Updated!',
+      }
+    }
+    case 'UPDATE_USER_ERROR': {
+      const { msg } = payload
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: msg,
+      }
+    }
     default:
       throw new Error(`no such action : ${type}`)
   }

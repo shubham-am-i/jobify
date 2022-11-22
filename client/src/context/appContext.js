@@ -24,6 +24,30 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  // axios with config and interceptors
+  const authFetch = axios.create({
+    baseURL: '/api/v1',
+  })
+  // request interceptor
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers['Authorization'] = `Bearer ${state.token}`
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+  // response interceptor
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+
   const displayAlert = () => {
     dispatch({ type: 'DISPLAY_ALERT' })
     clearAlert()
@@ -99,7 +123,22 @@ const AppProvider = ({ children }) => {
   }
 
   const updateUser = async (currentUser) => {
-    console.log(currentUser)
+    dispatch({ type: 'UPDATE_USER_BEGIN' })
+    try {
+      const { data } = await authFetch.patch('/auth/updateUser', currentUser)
+      const { user, location, token } = data
+      dispatch({
+        type: 'UPDATE_USER_SUCCESS',
+        payload: { user, location, token },
+      })
+      addUserToLocalStorage({ user, location, token })
+    } catch (error) {
+      dispatch({
+        type: 'UPDATE_USER_ERROR',
+        payload: { msg: error.response.data.msg },
+      })
+    }
+    clearAlert()
   }
   return (
     <AppContext.Provider
