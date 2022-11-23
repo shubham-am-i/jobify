@@ -1,15 +1,25 @@
-// import model
+import Job from '../models/jobModel.js'
+import ErrorResponse from '../utils/errorResponse.js'
 
+// @desc  Create Job
+// @route POST /api/v1/jobs/
+export const createJob = async (req, res) => {
+  const { position, company } = req.body
+  if (!position || !company) {
+    throw new ErrorResponse('Please provide all values', 400)
+  }
+
+  req.body.createdBy = req.user._id
+  const job = await Job.create(req.body)
+
+  res.status(201).json({ job })
+}
 export const getAllJobs = async (req, res) => {
   res.send('get all jobs')
 }
 
 export const showStats = async (req, res) => {
   res.send('showStats')
-}
-
-export const createJob = async (req, res) => {
-  res.send('createJob')
 }
 
 export const updateJob = async (req, res) => {
