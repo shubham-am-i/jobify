@@ -178,6 +178,21 @@ const reducer = (state, { type, payload }) => {
       }
     }
 
+    case 'SET_EDIT_JOB': {
+      const job = state.jobs.find((job) => job._id === payload.id)
+      const { _id, position, company, jobLocation, jobType, status } = job
+      return {
+        ...state,
+        isEditing: true,
+        editJobId: _id,
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      }
+    }
+
     default:
       throw new Error(`no such action : ${type}`)
   }
