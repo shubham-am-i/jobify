@@ -10,7 +10,7 @@ import {
   deleteJob,
 } from '../controllers/jobsController.js'
 
-router.route('/').get(getAllJobs).post(protect, createJob)
+router.route('/').get(protect, getAllJobs).post(protect, createJob)
 router.route('/stats').get(showStats) // this route should be always before id route
 router.route('/:id').patch(updateJob).delete(deleteJob)
 

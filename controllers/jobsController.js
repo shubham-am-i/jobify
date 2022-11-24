@@ -15,7 +15,12 @@ export const createJob = async (req, res) => {
   res.status(201).json({ job })
 }
 export const getAllJobs = async (req, res) => {
-  res.send('get all jobs')
+  const jobs = await Job.find({ createdBy: req.user.id })
+  res.status(200).json({
+    jobs,
+    totalJobs: jobs.length,
+    numOfPages: 1,
+  })
 }
 
 export const showStats = async (req, res) => {
