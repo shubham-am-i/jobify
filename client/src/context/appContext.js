@@ -15,8 +15,16 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || '',
-  jobLocation: userLocation || '',
   showSidebar: false,
+  isEditing: false,
+  editJobId: '',
+  position: '',
+  company: '',
+  jobLocation: userLocation || '',
+  jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
+  jobType: 'full-time',
+  statusOptions: ['interview', 'declined', 'pending'],
+  status: 'pending',
 }
 
 const AppContext = React.createContext()
@@ -145,6 +153,38 @@ const AppProvider = ({ children }) => {
     }
     clearAlert()
   }
+
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: 'HANDLE_CHANGE', payload: { name, value } })
+  }
+
+  const clearValues = () => {
+    dispatch({ type: 'CLEAR_VALUES' })
+  }
+
+  const createJob = async () => {
+    dispatch({ type: 'CREATE_JOB_BEGIN' })
+    try {
+      const { position, company, jobLocation, jobType, status } = state
+      await authFetch.post('/jobs', {
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      })
+      dispatch({ type: 'CREATE_JOB_SUCCESS' })
+      dispatch({ type: 'CLEAR_VALUES' })
+    } catch (error) {
+      if (error.response.status !== 401) {
+        dispatch({
+          type: 'CREATE_JOB_ERROR',
+          payload: { msg: error.response.data.msg },
+        })
+      }
+    }
+    clearAlert()
+  }
   return (
     <AppContext.Provider
       value={{
@@ -155,6 +195,9 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        handleChange,
+        clearValues,
+        createJob,
       }}
     >
       {children}

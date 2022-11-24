@@ -115,6 +115,53 @@ const reducer = (state, { type, payload }) => {
         alertText: msg,
       }
     }
+    case 'HANDLE_CHANGE': {
+      const { name, value } = payload
+      return {
+        ...state,
+        [name]: value,
+      }
+    }
+
+    case 'CLEAR_VALUES': {
+      const initialState = {
+        isEditing: false,
+        editJobId: '',
+        position: '',
+        company: '',
+        jobLocation: state.userLocation,
+        jobType: 'full-time',
+        status: 'pending',
+      }
+      return {
+        ...state,
+        ...initialState,
+      }
+    }
+
+    case 'CREATE_JOB_BEGIN': {
+      return { ...state, isLoading: true }
+    }
+
+    case 'CREATE_JOB_SUCCESS': {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'New Job Created!',
+      }
+    }
+    case 'CREATE_JOB_ERROR': {
+      const { msg } = payload
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: msg,
+      }
+    }
     default:
       throw new Error(`no such action : ${type}`)
   }
