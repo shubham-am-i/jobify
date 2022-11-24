@@ -162,6 +162,22 @@ const reducer = (state, { type, payload }) => {
         alertText: msg,
       }
     }
+
+    case 'GET_JOBS_BEGIN': {
+      return { ...state, isLoading: true, showAlert: false }
+    }
+
+    case 'GET_JOBS_SUCCESS': {
+      const { jobs, totalJobs, numOfPages } = payload
+      return {
+        ...state,
+        isLoading: false,
+        jobs,
+        totalJobs,
+        numOfPages,
+      }
+    }
+
     default:
       throw new Error(`no such action : ${type}`)
   }

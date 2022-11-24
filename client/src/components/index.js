@@ -5,5 +5,16 @@ import Navbar from './Navbar'
 import SmallSidebar from './SmallSidebar'
 import BigSidebar from './BigSidebar'
 import FormRowSelect from './FormRowSelect'
-
-export { Logo, FormRow, Alert, SmallSidebar, BigSidebar, Navbar, FormRowSelect }
+import SearchContainer from './SearchContainer'
+import JobsContainer from './JobsContainer'
+export {
+  Logo,
+  FormRow,
+  Alert,
+  SmallSidebar,
+  BigSidebar,
+  Navbar,
+  FormRowSelect,
+  SearchContainer,
+  JobsContainer,
+}
