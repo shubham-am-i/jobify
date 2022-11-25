@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Job from '../models/jobModel.js'
 import ErrorResponse from '../utils/errorResponse.js'
 import { isOwner } from '../utils/checkPermissions.js'
@@ -25,7 +26,23 @@ export const getAllJobs = async (req, res) => {
 }
 
 export const showStats = async (req, res) => {
-  res.send('showStats')
+  let stats = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },
+  ])
+
+  stats = stats.reduce((acc, curr) => {
+    acc[curr._id] = curr.count
+    return acc
+  }, {})
+
+  const defaultStats = {
+    pending: stats.pending || 0,
+    interview: stats.interview || 0,
+    declined: stats.declined || 0,
+  }
+  let monthlyApplications = []
+  res.status(200).json({ defaultStats, monthlyApplications })
 }
 
 // @desc    Update Job
