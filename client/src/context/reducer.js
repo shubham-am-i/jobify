@@ -227,6 +227,24 @@ const reducer = (state, { type, payload }) => {
         alertText: msg,
       }
     }
+
+    case 'SHOW_STATS_BEGIN': {
+      return {
+        ...state,
+        isLoading: true,
+        showAlert: false,
+      }
+    }
+
+    case 'SHOW_STATS_SUCCESS': {
+      const { stats, monthlyApplications } = payload
+      return {
+        ...state,
+        isLoading: false,
+        stats,
+        monthlyApplications,
+      }
+    }
     default:
       throw new Error(`no such action : ${type}`)
   }
