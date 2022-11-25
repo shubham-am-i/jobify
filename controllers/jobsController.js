@@ -32,7 +32,7 @@ export const showStats = async (req, res) => {
 // @route   PATCH /api/v1/jobs/:id
 export const updateJob = async (req, res) => {
   const { id } = req.params
-  const { company, position } = req.body
+  const { position, company, jobLocation, jobType, status } = req.body
   if (!position || !company)
     throw new ErrorResponse('Please provide all values', 400)
 
@@ -41,6 +41,9 @@ export const updateJob = async (req, res) => {
     isOwner(req.user, job.createdBy)
     job.position = position
     job.company = company
+    job.jobLocation = jobLocation
+    job.jobType = jobType
+    job.status = status
     await job.save()
     res.status(200).json({ job })
   } else {

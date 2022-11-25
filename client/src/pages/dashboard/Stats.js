@@ -1,4 +1,4 @@
 const Stats = () => {
-  return <div>Stats</div>
+  return <div className='container'>Stats</div>
 }
 export default Stats

@@ -7,7 +7,9 @@
   "scripts": {
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
-    "start": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \" "
+    "start": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \" ",
+    "i": "node seeder",
+    "d": "node seeder -d"
   },
   "author": "shubham",
   "license": "ISC",
