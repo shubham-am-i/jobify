@@ -1,8 +1,9 @@
 import Job from '../models/jobModel.js'
 import ErrorResponse from '../utils/errorResponse.js'
+import { isOwner } from '../utils/checkPermissions.js'
 
-// @desc  Create Job
-// @route POST /api/v1/jobs/
+// @desc    Create Job
+// @route   POST /api/v1/jobs/
 export const createJob = async (req, res) => {
   const { position, company } = req.body
   if (!position || !company) {
@@ -27,10 +28,38 @@ export const showStats = async (req, res) => {
   res.send('showStats')
 }
 
+// @desc    Update Job
+// @route   PATCH /api/v1/jobs/:id
 export const updateJob = async (req, res) => {
-  res.send('updateJob')
+  const { id } = req.params
+  const { company, position } = req.body
+  if (!position || !company)
+    throw new ErrorResponse('Please provide all values', 400)
+
+  const job = await Job.findOne({ _id: id })
+  if (job) {
+    isOwner(req.user, job.createdBy)
+    job.position = position
+    job.company = company
+    await job.save()
+    res.status(200).json({ job })
+  } else {
+    throw new ErrorResponse(`No job with id ${id}`, 404)
+  }
 }
 
+// @desc    Delete Job
+// @route   DELETE /api/v1/jobs/:id
 export const deleteJob = async (req, res) => {
-  res.send('deleteJob')
+  const { id } = req.params
+  const job = await Job.findOne({ _id: id })
+
+  if (job) {
+    isOwner(req.user, job.createdBy)
+
+    await job.remove()
+    res.status(200).json({ msg: 'Success! Job removed' })
+  } else {
+    throw new ErrorResponse(`No job with id ${id}`, 404)
+  }
 }
