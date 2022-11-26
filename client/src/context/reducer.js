@@ -119,6 +119,7 @@ const reducer = (state, { type, payload }) => {
       const { name, value } = payload
       return {
         ...state,
+        page: 1,
         [name]: value,
       }
     }
@@ -253,6 +254,13 @@ const reducer = (state, { type, payload }) => {
         searchStatus: 'all',
         searchType: 'all',
         sort: 'latest',
+      }
+    }
+
+    case 'CHANGE_PAGE': {
+      return {
+        ...state,
+        page: payload.page,
       }
     }
     default:
