@@ -37,11 +37,21 @@ export const getAllJobs = async (req, res) => {
   if (sort === 'a-z') result = result.sort('position')
   if (sort === 'z-a') result = result.sort('-position')
 
+  // setup pagination
+  const page = +req.query.page || 1
+  const limit = +req.query.limit || 10
+  const skip = (page - 1) * limit
+
+  result = result.skip(skip).limit(limit)
+
   const jobs = await result
+
+  const totalJobs = await Job.countDocuments(queryObject)
+  const numOfPages = Math.ceil(totalJobs / limit)
   res.status(200).json({
-    totalJobs: jobs.length,
+    totalJobs,
+    numOfPages,
     jobs,
-    numOfPages: 1,
   })
 }
 
