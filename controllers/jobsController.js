@@ -18,10 +18,29 @@ export const createJob = async (req, res) => {
   res.status(201).json({ job })
 }
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.id })
+  const { status, jobType, sort, search } = req.query
+
+  const queryObject = {
+    createdBy: req.user._id,
+  }
+
+  // add stuff based on condition
+  if (status !== 'all') queryObject.status = status
+  if (jobType !== 'all') queryObject.jobType = jobType
+  if (search) queryObject.position = { $regex: search, $options: 'i' }
+
+  let result = Job.find(queryObject)
+
+  // chain sort conditions
+  if (sort === 'latest') result = result.sort('-createdAt')
+  if (sort === 'oldest') result = result.sort('createdAt')
+  if (sort === 'a-z') result = result.sort('position')
+  if (sort === 'z-a') result = result.sort('-position')
+
+  const jobs = await result
   res.status(200).json({
-    jobs,
     totalJobs: jobs.length,
+    jobs,
     numOfPages: 1,
   })
 }
