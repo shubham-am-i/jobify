@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.article`
   background: var(--white);
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -23,6 +24,7 @@ const Wrapper = styled.article`
     display: grid;
     place-items: center;
     background: var(--primary-500);
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
     border-radius: var(--borderRadius);
     font-size: 1.5rem;
     font-weight: 700;
