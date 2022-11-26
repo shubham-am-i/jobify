@@ -245,6 +245,16 @@ const reducer = (state, { type, payload }) => {
         monthlyApplications,
       }
     }
+
+    case 'CLEAR_FILTERS': {
+      return {
+        ...state,
+        search: '',
+        searchStatus: 'all',
+        searchType: 'all',
+        sort: 'latest',
+      }
+    }
     default:
       throw new Error(`no such action : ${type}`)
   }
