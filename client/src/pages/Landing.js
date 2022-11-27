@@ -20,7 +20,6 @@ const Landing = () => {
           <p>
             This is the MERN project, where one can keep track of his applied
             job applications. View monthly progress through nice charts/graphs.
-            on.
           </p>
           <Link to='/register' className='btn btn-hero'>
             Login/Register
