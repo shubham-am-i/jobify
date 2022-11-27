@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build-client": "cd client && npm run build",
+    "setup-production": "npm run build-client && npm install",
+    "build-client": "cd client && npm install && npm run build",
+    "install-dependencies": "npm install && cd client && npm install",
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \" ",

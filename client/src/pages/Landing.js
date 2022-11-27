@@ -18,7 +18,8 @@ const Landing = () => {
             job <span>tracking</span> app
           </h1>
           <p>
-            This is the react jobify project info which I have to change later
+            This is the MERN project, where one can keep track of his applied
+            job applications. View monthly progress through nice charts/graphs.
             on.
           </p>
           <Link to='/register' className='btn btn-hero'>
