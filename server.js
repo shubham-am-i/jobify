@@ -8,6 +8,9 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import 'express-async-errors'
 import morgan from 'morgan'
+import helmet from 'helmet'
+import xss from 'xss-clean'
+import mongoSanitize from 'express-mongo-sanitize'
 
 // local imports
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
@@ -24,6 +27,9 @@ const __dirname = path.dirname(__filename)
 // Middlewares
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, './client/build')))
+app.use(helmet())
+app.use(xss())
+app.use(mongoSanitize())
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
