@@ -6,7 +6,7 @@ Project in Action - [Jobify](https://jobify-7qh9.onrender.com)
 
 ## Features
 
-- Access API documentation on Frontend using swagger
+- API documentation on Frontend using docgen
 - Create mock data (Mockaroo) and populate the database using automated scripts.
 - Use ES6 Modules on the back-end
 - Setup "proxy" in create-react-app
