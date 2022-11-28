@@ -4,6 +4,8 @@
 
 Project in Action - [Jobify](https://jobify-7qh9.onrender.com)
 
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/20805847/2s8YsxuB4B)
+
 ## Features
 
 - API documentation on Frontend using docgen
