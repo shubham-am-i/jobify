@@ -8,7 +8,7 @@ Extensive documentation with examples [here](https://documenter.getpostman.com/v
 
 ## Features
 
-- API documentation on Frontend using docgen
+
 - Create mock data (Mockaroo) and populate the database using automated scripts.
 - Use ES6 Modules on the back-end
 - Setup "proxy" in create-react-app
@@ -26,6 +26,7 @@ Extensive documentation with examples [here](https://documenter.getpostman.com/v
 - Setup moment.js on the front-end and back-end
 - Setup nice charts and cards
 - Implement search/filter functionality along with pagination on the server and front-end
+- API documentation using postman
 
 ## Usage
 
