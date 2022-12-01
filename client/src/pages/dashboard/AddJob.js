@@ -15,6 +15,8 @@ const AddJob = () => {
     jobTypeOptions,
     status,
     statusOptions,
+    portal,
+    portalOptions,
     handleChange,
     clearValues,
     createJob,
@@ -73,6 +75,14 @@ const AddJob = () => {
             value={status}
             handleChange={handleJobInput}
             list={statusOptions}
+          />
+          {/* job platform */}
+          <FormRowSelect
+            name='portal'
+            labelText='job portal'
+            value={portal}
+            handleChange={handleJobInput}
+            list={portalOptions}
           />
           {/* job type */}
           <FormRowSelect

@@ -133,6 +133,7 @@ const reducer = (state, { type, payload }) => {
         jobLocation: state.userLocation,
         jobType: 'full-time',
         status: 'pending',
+        portal: 'Coding Ninjas',
       }
       return {
         ...state,

@@ -81,6 +81,7 @@ const Wrapper = styled.article`
     width: 100px;
     height: 30px;
   }
+
   footer {
     margin-top: 1rem;
   }

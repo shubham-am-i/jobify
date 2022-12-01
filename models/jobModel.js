@@ -17,6 +17,20 @@ const JobSchema = new mongoose.Schema(
       enum: ['interview', 'declined', 'pending'],
       default: 'pending',
     },
+    portal: {
+      type: String,
+      enum: [
+        'Coding Ninjas',
+        'LinkedIn',
+        'Naukri',
+        'Hirect',
+        'Hirist',
+        'Internshala',
+        'Careers',
+        'Other',
+      ],
+      default: 'Coding Ninjas',
+    },
     jobType: {
       type: String,
       enum: ['full-time', 'part-time', 'remote', 'internship'],
