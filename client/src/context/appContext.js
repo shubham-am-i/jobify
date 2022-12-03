@@ -239,13 +239,14 @@ const AppProvider = ({ children }) => {
   const editJob = async () => {
     dispatch({ type: 'EDIT_JOB_BEGIN' })
     try {
-      const { position, company, jobLocation, jobType, status } = state
+      const { position, company, jobLocation, jobType, status, portal } = state
       await authFetch.patch(`/jobs/${state.editJobId}`, {
         company,
         position,
         jobLocation,
         jobType,
         status,
+        portal,
       })
       dispatch({ type: 'EDIT_JOB_SUCCESS' })
       dispatch({ type: 'CLEAR_VALUES' })
