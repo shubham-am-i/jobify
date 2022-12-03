@@ -110,7 +110,7 @@ export const showStats = async (req, res) => {
 // @route   PATCH /api/v1/jobs/:id
 export const updateJob = async (req, res) => {
   const { id } = req.params
-  const { position, company, jobLocation, jobType, status } = req.body
+  const { position, company, jobLocation, jobType, status, portal } = req.body
   if (!position || !company)
     throw new ErrorResponse('Please provide all values', 400)
 
@@ -122,6 +122,7 @@ export const updateJob = async (req, res) => {
     job.jobLocation = jobLocation
     job.jobType = jobType
     job.status = status
+    job.portal = portal
     await job.save()
     res.status(200).json({ job })
   } else {
